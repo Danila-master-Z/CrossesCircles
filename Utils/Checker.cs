@@ -47,15 +47,14 @@ static class Checker
         {
             return new WinnerData
             {
-                TopLeftSideCoordinate = new Point(0, 2),
+                TopLeftSideCoordinate = new Point(2, 0),
                 WinnerShape = field[2, 0],
-                WinnerLineType = LineType.Horizontal
+                WinnerLineType = LineType.Diagonal
             };
         }
 
         return null;
     }
-
     public static bool IsBoardFull(char[,] board)
     {
         for (int i = 0; i < 3; i++)

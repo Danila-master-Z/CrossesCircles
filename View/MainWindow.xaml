@@ -3,90 +3,73 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:cmp="clr-namespace:CrossesCircles.Components"
         mc:Ignorable="d"
-        Title="Крестики - Нолики" Height="400" Width="300"
+        Title="Крестики - Нолики" Height="400" Width="330"
         SizeToContent="WidthAndHeight" ResizeMode="NoResize">
 
-    <Window.Resources>
-        <Style TargetType="Rectangle">
-            <Style.Setters>
-                <Setter Property="Fill" Value="White"/>
-                <Setter Property="Stroke" Value="Black"/>
-            </Style.Setters>
-        </Style>
-        <Style TargetType="Image">
-            <Style.Setters>
-                <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
-            </Style.Setters>
-        </Style>
-        <Style TargetType="cmp:OneClickableButton">
-            <Style.Setters>
-                <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="Margin" Value="2"/>
-                <Setter Property="RenderTransform">
-                    <Setter.Value>
-                        <ScaleTransform ScaleX="1" ScaleY="1"/>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
-            </Style.Setters>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="White"/>
-                </Trigger>
-                <EventTrigger RoutedEvent="Click">
-                    <EventTrigger.Actions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" To="0.0" Duration="0:0:0.25"/>
-                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="0.0" Duration="0:0:0.25"/>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger.Actions>
-                </EventTrigger>
-            </Style.Triggers>
-        </Style>
-        <Style TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="Arial Black"/>
-            <Setter Property="FontSize" Value="14"/>
-        </Style>
-        <Style TargetType="Button">
-            <Setter Property="FontFamily" Value="Arial Black"/>
-            <Setter Property="FontSize" Value="14"/>
-        </Style>
-    </Window.Resources>
-
-    <Grid x:Name="MainGrid">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
             <RowDefinition Height="50"/>
+            <RowDefinition Height="315"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <Rectangle Grid.Column="0" Grid.Row="0"/>
-        <Rectangle Grid.Column="1" Grid.Row="0"/>
-        <Rectangle Grid.Column="2" Grid.Row="0"/>
-        <Rectangle Grid.Column="0" Grid.Row="1"/>
-        <Rectangle Grid.Column="1" Grid.Row="1"/>
-        <Rectangle Grid.Column="2" Grid.Row="1"/>
-        <Rectangle Grid.Column="0" Grid.Row="2"/>
-        <Rectangle Grid.Column="1" Grid.Row="2"/>
-        <Rectangle Grid.Column="2" Grid.Row="2"/>
+        <TextBlock Name="StatusTextBlock" Grid.Row="0" Grid.Column="0"
+            Text="Игра началась!"
+            TextAlignment="Center"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="15"/>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="15"/>
+            </Grid.ColumnDefinitions>
 
-        
-        <Button Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3"
-                Content="Сброс" Click="ResetBtnClicked" Background="Red"/>
-        <TextBlock Name="StatusTextBlock" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Text="Игра началась!"
-                   TextAlignment="Center" VerticalAlignment="Center"
-                   HorizontalAlignment="Center"/>
+            <Grid x:Name="MainGrid" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+
+                <Rectangle Grid.Column="0" Grid.Row="0"/>
+                <Rectangle Grid.Column="1" Grid.Row="0"/>
+                <Rectangle Grid.Column="2" Grid.Row="0"/>
+                <Rectangle Grid.Column="0" Grid.Row="1"/>
+                <Rectangle Grid.Column="1" Grid.Row="1"/>
+                <Rectangle Grid.Column="2" Grid.Row="1"/>
+                <Rectangle Grid.Column="0" Grid.Row="2"/>
+                <Rectangle Grid.Column="1" Grid.Row="2"/>
+                <Rectangle Grid.Column="2" Grid.Row="2"/>
+            </Grid>
+
+            <Grid Grid.Row="0" Grid.Column="1">
+                <Line X1="100" Y1="0" X2="100" Y2="300"/>
+                <Line X1="200" Y1="0" X2="200" Y2="300"/>
+                <Line X1="0" Y1="100" X2="300" Y2="100"/>
+                <Line X1="0" Y1="200" X2="300" Y2="200"/>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Name="PercentText"
+                       Grid.Row="0" Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Margin="10 5 0 0"></TextBlock>
+            
+            <Button Grid.Column="1" Grid.Row="0" Content="Новая игра"
+                    Click="ResetBtnClicked" Background="Blue"/>
+        </Grid>
     </Grid>
 </Window>

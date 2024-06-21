@@ -1,17 +1,18 @@
 ﻿using System.Windows;
 
-namespace CrossesCircles.Model;
-
-public class WinnerData
+namespace CrossesCircles.Model
 {
-    public char WinnerShape { get; init; }
-    public LineType WinnerLineType { get; init; }
-    public Point TopLeftSideCoordinate { get; init; }
-}
+    public class WinnerData
+    {
+        public char WinnerShape { get; init; }
+        public LineType WinnerLineType { get; init; }
+        public Point TopLeftSideCoordinate { get; init; }
+    }
 
-public enum LineType
-{
-    Vertical,
-    Horizontal,
-    Diagonal
+    public enum LineType
+    {
+        Vertical,
+        Horizontal,
+        Diagonal
+    }
 }

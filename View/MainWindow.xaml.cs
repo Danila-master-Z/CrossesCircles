@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Common;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,6 +19,7 @@ public partial class MainWindow
     private Image?[,] images = new Image?[3, 3];
     private FieldElementFactory factory = new();
     private GoBot bot = new();
+    private Percent percent = new();
 
     public MainWindow()
     {
@@ -25,6 +28,7 @@ public partial class MainWindow
         playField = new PlayField();
         currentState = 0;
         InitGrid();
+        Result();
     }
 
     private void ResetBtnClicked(object sender, RoutedEventArgs e)
@@ -68,10 +72,6 @@ public partial class MainWindow
             throw new ArgumentNullException(nameof(button));
         if (button.IsClicked)
             return;
-        button.IsClicked = true;
-
-        await Task.Delay(0);
-        button.Visibility = Visibility.Collapsed;
 
         if (currentState % 2 == 0)
         {
@@ -80,10 +80,8 @@ public partial class MainWindow
 
             playField.Field[row, column] = 'x';
             UpdateGrid(column, row);
-
-            currentState++;
-
             Result();
+            currentState++;
         }
 
         if (currentState % 2 == 1 && currentState < 9)
@@ -92,10 +90,8 @@ public partial class MainWindow
             (int row_b, int column_b) = bestMove;
             playField.Field[row_b, column_b] = 'o';
             UpdateGrid(column_b, row_b);
-
-            currentState++;
-
             Result();
+            currentState++;
         }
     }
 
@@ -131,11 +127,23 @@ public partial class MainWindow
     private void Result()
     {
         var resultOfStep = Checker.CheckForWinner(playField.Field);
+        var draw = Checker.IsBoardFull(playField.Field);
         if (resultOfStep != null)
         {
             var winner = resultOfStep.WinnerShape == 'x' ? "Крестик" : "Нолик";
             StatusTextBlock.Text = $"Игра окончена!\nПобедил: {winner}";
             Animation.AnimateWin((int)resultOfStep.TopLeftSideCoordinate.X, (int)resultOfStep.TopLeftSideCoordinate.Y, resultOfStep.WinnerLineType, images);
+        }
+        if (draw == false)
+        {
+            List<double> percent_l = percent.Percent_Win(playField.Field);
+            PercentText.Text = $"X: {(int)Math.Round(percent_l[0])}% " +
+                $"O: {(int)Math.Round(percent_l[1])}% \n" +
+                $"Ничья: {(int)Math.Round(percent_l[2])}%";
+        }
+        if (draw)
+        {
+            StatusTextBlock.Text = $"Игра окончена!\nНичья!";
         }
     }
 }

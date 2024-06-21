@@ -8,6 +8,7 @@ namespace CrossesCircles.Utils
 {
     public class GoBot
     {
+        private MiniMax_method miniMax = new();
         public Tuple<int, int> Bot(char[,] board)
         {
             int bestScore = int.MinValue;
@@ -20,7 +21,7 @@ namespace CrossesCircles.Utils
                     if (board[i, j] == '.')
                     {
                         board[i, j] = 'o';
-                        int score = MiniMax(board, 0, false);
+                        int score = miniMax.MiniMax(board, 0, false);
                         board[i, j] = '.';
 
                         if (score > bestScore)
@@ -33,57 +34,6 @@ namespace CrossesCircles.Utils
             }
 
             return bestMove;
-        }
-
-        private int MiniMax(char[,] board, int depth, bool isMaximizing)
-        {
-            var result = Checker.CheckForWinner(board);
-            if (result != null)
-            {
-                return result.WinnerShape == 'o' ? 1 : -1;
-            }
-
-            if (!Checker.IsBoardFull(board))
-            {
-                if (isMaximizing)
-                {
-                    int bestScore = int.MinValue;
-                    for (int i = 0; i < board.GetLength(0); i++)
-                    {
-                        for (int j = 0; j < board.GetLength(1); j++)
-                        {
-                            if (board[i, j] == '.')
-                            {
-                                board[i, j] = 'o';
-                                int score = MiniMax(board, depth + 1, false);
-                                board[i, j] = '.';
-                                bestScore = Math.Max(score, bestScore);
-                            }
-                        }
-                    }
-                    return bestScore;
-                }
-                else
-                {
-                    int bestScore = int.MaxValue;
-                    for (int i = 0; i < board.GetLength(0); i++)
-                    {
-                        for (int j = 0; j < board.GetLength(1); j++)
-                        {
-                            if (board[i, j] == '.')
-                            {
-                                board[i, j] = 'x';
-                                int score = MiniMax(board, depth + 1, true);
-                                board[i, j] = '.';
-                                bestScore = Math.Min(score, bestScore);
-                            }
-                        }
-                    }
-                    return bestScore;
-                }
-            }
-
-            return 0;
         }
     }
 }

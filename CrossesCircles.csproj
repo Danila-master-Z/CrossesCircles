@@ -13,6 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Include="App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Resources\Circle.png" />
     <Resource Include="Resources\Cross.png" />
   </ItemGroup>
